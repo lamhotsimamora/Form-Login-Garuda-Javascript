@@ -7,7 +7,7 @@ function showToast(t)
     });
 }
 
-function welcome()
+function welcomeLoading()
 {
 	Garuda('btn_login').hide();
 	$display.setContent('<center><img class="" src="img/loading.gif"></img></center>');
@@ -21,10 +21,10 @@ function checkLogin()
 	{
 		return false;
 	}else{
-		return new Array({
+		return {
 			username:_getStorage('username'),
 			password:_getStorage('password')
-		});
+		}
 	}
 }
 
@@ -65,7 +65,7 @@ function login()
 		    }
 	}
   }else{
-  	  welcome();
+  	  welcomeLoading();
   }
 }
 
@@ -85,15 +85,14 @@ function welcomeTemplate()
 		'</div>'
 	);
 
-	let data_username = _getStorage('username'),
-	    data_password = _getStorage('password');
+	let data = checkLogin();
 
 	$layout_welcome = __({
 	  el:"layout_welcome",
 	  html:{
 	  	single:{
-	  		username:data_username,
-	  		password:data_password
+	  		username:data.username,
+	  		password:data.password
 	  	}
 	  }
 	});
@@ -114,7 +113,7 @@ function startTimer()
 	var interval ;
 	interval = setInterval($=>{
 		t++;
-		if (t==7)
+		if (t==8)
 		{
 			welcomeTemplate();
 			clearInterval(interval);
@@ -125,7 +124,7 @@ function startTimer()
 
 if (checkLogin() != false)
 {
-	welcome();
+	welcomeLoading();
 }else{
 	showToast('username');
 }
