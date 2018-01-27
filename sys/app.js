@@ -21,6 +21,10 @@ function checkLogin()
 	{
 		return false;
 	}else{
+		/**
+		 * Return data from storage
+		 * type {array}
+		 */
 		return {
 			username:_getStorage('username'),
 			password:_getStorage('password')
@@ -33,22 +37,52 @@ function login()
 {
 	if (! checkLogin())
 	{
+		/**
+		 * $input_username.getObj is equal to document.getElementById("t_username")
+		 */
 		if ($input_username.getObj)
 		{
+			/**
+			 * Get value from input text (t_username)
+			 * @type {[type]}
+			 */
 			let username = $input_username.getValue;
+
+			/**
+			 * Check if value is null or empty
+			 * @type {[type]}
+			 */
 			if (username ==='' || username==null)
 			{
 				showToast('username');
 				$input_username.focus();
 			}else{
+				/**
+				 * Save the value of input t_username to storage browser
+				 */
 				_saveStorage('username',username);
+
+				/**
+				 * Prepare component t_password
+				 * @type {input}
+				 */
 				$password_input = new input({
 					id:'t_password',
 					placeholder:'Password',
 					type:'password'
 				});
+
+				/**
+				 * Render password input
+				 * @type {[type]}
+				 */
 				$password_input = $password_input.render();
+				
+				/**
+				 * Set to focus
+				 */
 				$password_input.focus();
+				
 				showToast('password');
 			}
 		}
@@ -72,6 +106,11 @@ function login()
 
 function welcomeTemplate()
 {
+	/**
+	 * Prepare welcome template
+	 * and also set it to display none
+	 * @type {String}
+	 */
 	$display.setContent(
 		'<div id="layout_welcome" style="display: none" class="card">'+
 		  '<div class="card-header">'+
@@ -85,8 +124,17 @@ function welcomeTemplate()
 		'</div>'
 	);
 
+	/**
+	 * Getting data from storage
+	 * @type {[array]}
+	 */
 	let data = checkLogin();
 
+	/**
+	 * Prepare templating syntax single data 
+	 * to layout_welcome
+	 * @type {[type]}
+	 */
 	$layout_welcome = __({
 	  el:"layout_welcome",
 	  html:{
@@ -97,8 +145,15 @@ function welcomeTemplate()
 	  }
 	});
 
-
+	/**
+	 * and then layout_welcome ready to show
+	 */
 	$layout_welcome.show();
+
+	/**
+	 * Display toast
+	 * @type {String}
+	 */
 	iziToast.show({
 	    title: 'Welcome '+data.username+'',
 	    message: 'Hi '+data.password+' ! You have been login now !',
@@ -121,15 +176,23 @@ function startTimer()
 	},100);
 }
 
-
+/**
+ * Check login
+ */
 if (checkLogin() != false)
 {
+	/**
+	 * Call function welcomeLoading()
+	 */
 	welcomeLoading();
 }else{
 	showToast('username');
 }
 
 
+/**
+ * Clear storage browser and then refresh the urL
+ */
 function logout()
 {
 	localStorage.clear();
