@@ -100,8 +100,8 @@ function welcomeTemplate()
 
 	$layout_welcome.show();
 	iziToast.show({
-	    title: 'Welcome '+data_username+'',
-	    message: 'Hi '+data_username+' ! You have been login now !',
+	    title: 'Welcome '+data.username+'',
+	    message: 'Hi '+data.password+' ! You have been login now !',
 	    color:'green'
     });
 }
